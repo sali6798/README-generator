@@ -18,7 +18,7 @@ function getUserInfo(username) {
 
 async function createMD(answers) {
     const profileInfo = await getUserInfo(answers.username);
-    const readmeStrHeader = `<!-- omit in toc -->\n# ${answers.title}\n![GitHub language count](https://img.shields.io/github/languages/count/${answers.username}/${answers.title})`;
+    let readmeStrHeader = `<!-- omit in toc -->\n# ${answers.title}\n![GitHub language count](https://img.shields.io/github/languages/count/${answers.username}/${answers.title})`;
     let readmeStrBody = ``;
     const tableHeader = `\n\n<!-- omit in toc -->\n## Table of Contents`;
     let tableStr = ``;
