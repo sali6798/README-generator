@@ -28,7 +28,7 @@ async function createMD(answers) {
         readmeStrHeader += `\n\n<!-- omit in toc -->\n## Description\n${answers.description}`;
     }
 
-    // loops through all the keys (adapted from Darrion Ramdin https://medium.com/@darrion/ways-to-loop-through-an-object-in-javascript-622353049c7f)
+    // loops through all the keys
     const keys = Object.keys(answers);
     for (let i = 3; i < keys.length; i++) {
         // checks if the user provided a response
