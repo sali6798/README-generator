@@ -14,37 +14,37 @@ function promptUser() {
         },
         {
             type: "input",
-            message: "Project title:",
+            message: "Enter the Project title:",
             name: "title"
         },
         {
             type: "input",
-            message: "Description:",
+            message: "Enter a Description of the project:",
             name: "description"
         },
         {
             type: "input",
-            message: "Installation:",
+            message: "Enter step-by-step guide for Installation of project (if needed):",
             name: "installation"
         },
         {
             type: "input",
-            message: "Usage:",
+            message: "Enter info for Usage of project (if needed):",
             name: "usage"
         },
         {
             type: "input",
-            message: "License:",
+            message: "Enter License (if any):",
             name: "license"
         },
         {
             type: "input",
-            message: "Contributing:",
+            message: "Enter info for others Contributing to project (if applicable):",
             name: "contributing"
         },
         {
             type: "input",
-            message: "Tests:",
+            message: "Enter info on how to run Tests (if any):",
             name: "tests"
         },
     ])
@@ -54,7 +54,7 @@ promptUser()
     // create md file with user's answers
     .then(answers => generateREADME.createMD(answers))
     // write returned md string to file
-    .then(readmeStr => writeFileAsync("testREADME.md", readmeStr))
+    .then(readmeStr => writeFileAsync("README.md", readmeStr))
     // print statement when file successfully created
     .then(() => console.log("README.md created!"))
     .catch(error => console.log(error));
