@@ -29,7 +29,7 @@ async function createMD(answers) {
     }
 
     const keys = Object.keys(answers);
-    // loops through all the keys
+    // loops through all the keys starting at 'installation'
     for (let i = 3; i < keys.length; i++) {
         // checks if the user provided a response
         if (answers[keys[i]] !== "") {
