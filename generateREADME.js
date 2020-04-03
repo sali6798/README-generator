@@ -41,14 +41,17 @@ async function createMD(answers) {
             readmeStrBody += `\n\n## ${capitalizedKey}\n${answers[keys[i]]}`;
         }
     }
-
+    // adds questions section with user profile pic and email if provided github username is valid
     if (profileInfo !== "") {
         tableStr += `\n- [Questions](#questions)`;
         readmeStrBody += `\n\n## Questions\n![${answers.username} profile pic](${profileInfo[1]})\n\nEmail: ${profileInfo[0]}`;
     }
 
     // if no answers to any of the sections there is no table of contents
-    const toc = tableStr !== `` ? tableHeader + tableStr : "";
+    let toc = "";
+    if (tableStr !== "") {
+        toc = tableHeader + tableStr
+    }
 
     return readmeStrHeader + toc + readmeStrBody;
 }
