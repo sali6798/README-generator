@@ -1,14 +1,15 @@
 const axios = require("axios");
-const config = { headers: { accept: "application/json" } };
+require("dotenv").config();
+const config = { headers: { accept: "application/json", authorization: "token " + process.env.AUTH_TOKEN }};
 
 function getUserInfo(username) {
     return axios
         // API call to github API using user's name
-        .get(`https://api.github.com/users/${username}/events/public`, config)
+        .get(`https://api.github.com/users/${username}`, config)
         .then(response => {
             // get email and profile picture
-            email = response.data[0].payload.commits[0].author.email;
-            profile = response.data[0].actor.avatar_url;
+            email = response.data.email;
+            profile = response.data.avatar_url;
             return [email, profile];
         })
         // if user doesn't exist return empty string
