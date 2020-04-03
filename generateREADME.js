@@ -28,8 +28,8 @@ async function createMD(answers) {
         readmeStrHeader += `\n\n<!-- omit in toc -->\n## Description\n${answers.description}`;
     }
 
-    // loops through all the keys
     const keys = Object.keys(answers);
+    // loops through all the keys
     for (let i = 3; i < keys.length; i++) {
         // checks if the user provided a response
         if (answers[keys[i]] !== "") {
