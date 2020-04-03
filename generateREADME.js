@@ -16,79 +16,58 @@ function getUserInfo(username) {
         .catch(error => "")
 }
 
-function createTableOfContents(answers, hasProfileInfo) {
+async function createMD(answers) {
+    const profileInfo = await getUserInfo(answers.username);
+    let readmeStrBody = ``;
+    let readmeStrHeader = `<!-- omit in toc -->\n# ${answers.title}\n![GitHub language count](https://img.shields.io/github/languages/count/${answers.username}/${answers.title})`;
     let tableStr = ``;
     const tableHeader = `\n\n<!-- omit in toc -->\n## Table of Contents`;
 
-    if (answers.installation !== "") {
-        tableStr += `\n- [Installation](#installation)`;
-    }
-
-    if (answers.usage !== "") {
-        tableStr += `\n- [Usage](#usage)`;
-    }
-
-    if (answers.license !== "") {
-        tableStr += `\n- [License](#license)`;
-    }
-    if (answers.contributing !== "") {
-        tableStr += `\n- [Contributing](#contributing)`;
-    }
-    if (answers.tests !== "") {
-        tableStr += `\n- [Tests](#tests)`;
-    }
-    if (hasProfileInfo) {
-        tableStr += `\n- [Questions](#questions)`;
-    }
-    
-    // if all fields are empty there is no table of contents else return table
-    return tableStr !== `` ? tableHeader + tableStr : "";   
-}
-
-async function createMD(answers) {
-    const profileInfo = await getUserInfo(answers.username);
-
-    let readmeStr = `<!-- omit in toc -->\n# ${answers.title}\n![GitHub language count](https://img.shields.io/github/languages/count/${answers.username}/${answers.title})`;
-
     // if user entered a description section add to readme
     if (answers.description !== "") {
-        readmeStr += `\n\n<!-- omit in toc -->\n## Description\n${answers.description}`;
+        readmeStrHeader += `\n\n<!-- omit in toc -->\n## Description\n${answers.description}`;
     }
-
-    // add table of contents to readme
-    readmeStr += createTableOfContents(answers, profileInfo !== "");
 
     // if user entered an installation section add to readme
     if (answers.installation !== "") {
-        readmeStr += `\n\n## Installation\n${answers.installation}`;
+        tableStr += `\n- [Installation](#installation)`;
+        readmeStrBody += `\n\n## Installation\n${answers.installation}`;
     }
 
     // if user entered a usage section add to readme
     if (answers.usage !== "") {
-        readmeStr += `\n\n## Usage\n${answers.usage}`;
+        tableStr += `\n- [Usage](#usage)`;
+        readmeStrBody += `\n\n## Usage\n${answers.usage}`;
     }
 
     // if user entered a license section add to readme
     if (answers.license !== "") {
-        readmeStr += `\n\n## License\n${answers.license}`;
+        tableStr += `\n- [License](#license)`;
+        readmeStrBody += `\n\n## License\n${answers.license}`;
     }
 
     // if user entered a contributing section add to readme
     if (answers.contributing !== "") {
-        readmeStr += `\n\n## Contributing\n${answers.contributing}`;
+        tableStr += `\n- [Contributing](#contributing)`;
+        readmeStrBody += `\n\n## Contributing\n${answers.contributing}`;
     }
 
     // if user entered a tests section add to readme
     if (answers.tests !== "") {
-        readmeStr += `\n\n## Tests\n${answers.tests}`;
+        tableStr += `\n- [Tests](#tests)`;
+        readmeStrBody += `\n\n## Tests\n${answers.tests}`;
     }
 
     // if user entered a valid github username add questions section to readme
     if (profileInfo !== "") {
-        readmeStr += `\n\n## Questions\n![${answers.username} profile pic](${profileInfo[1]})\n\nEmail: ${profileInfo[0]}`;
+        tableStr += `\n- [Questions](#questions)`;
+        readmeStrBody += `\n\n## Questions\n![${answers.username} profile pic](${profileInfo[1]})\n\nEmail: ${profileInfo[0]}`;
     }
 
-    return readmeStr;
+    // if no answers to any of the sections there is no table of contents
+    const toc = tableStr !== `` ? tableHeader + tableStr : "";
+
+    return readmeStrHeader + toc + readmeStrBody;
 }
 
 module.exports = {
