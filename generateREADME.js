@@ -28,41 +28,28 @@ async function createMD(answers) {
         readmeStrHeader += `\n\n<!-- omit in toc -->\n## Description\n${answers.description}`;
     }
 
-    // if user entered an installation section add to readme
-    if (answers.installation !== "") {
-        tableStr += `\n- [Installation](#installation)`;
-        readmeStrBody += `\n\n## Installation\n${answers.installation}`;
-    }
-
-    // if user entered a usage section add to readme
-    if (answers.usage !== "") {
-        tableStr += `\n- [Usage](#usage)`;
-        readmeStrBody += `\n\n## Usage\n${answers.usage}`;
-    }
-
-    // if user entered a license section add to readme
-    if (answers.license !== "") {
-        tableStr += `\n- [License](#license)`;
-        readmeStrBody += `\n\n## License\n${answers.license}`;
-    }
-
-    // if user entered a contributing section add to readme
-    if (answers.contributing !== "") {
-        tableStr += `\n- [Contributing](#contributing)`;
-        readmeStrBody += `\n\n## Contributing\n${answers.contributing}`;
-    }
-
-    // if user entered a tests section add to readme
-    if (answers.tests !== "") {
-        tableStr += `\n- [Tests](#tests)`;
-        readmeStrBody += `\n\n## Tests\n${answers.tests}`;
-    }
-
-    // if user entered a valid github username add questions section to readme
-    if (profileInfo !== "") {
-        tableStr += `\n- [Questions](#questions)`;
-        readmeStrBody += `\n\n## Questions\n![${answers.username} profile pic](${profileInfo[1]})\n\nEmail: ${profileInfo[0]}`;
-    }
+    // loops through all the keys (adapted from Darrion Ramdin https://medium.com/@darrion/ways-to-loop-through-an-object-in-javascript-622353049c7f)
+    Object.keys(answers).forEach((key, index) => {
+        // starts from installation section
+        if (index >= 3) {
+            if (answers[key] !== "") {
+                // makes the key start with a capital letter
+                const capitalizedKey = key[0].toUpperCase() + key.substring(1)
+                // adds section to table of content
+                tableStr += `\n- [${capitalizedKey}](#${key})`;
+                // adds section to README
+                readmeStrBody += `\n\n## ${capitalizedKey}\n${answers[key]}`;
+            }
+            // enter questions as the last section
+            if (index === 7) {
+                // if user entered a valid github username add questions section to readme
+                if (profileInfo !== "") {
+                    tableStr += `\n- [Questions](#questions)`;
+                    readmeStrBody += `\n\n## Questions\n![${answers.username} profile pic](${profileInfo[1]})\n\nEmail: ${profileInfo[0]}`;
+                }
+            }
+        }
+    })
 
     // if no answers to any of the sections there is no table of contents
     const toc = tableStr !== `` ? tableHeader + tableStr : "";
