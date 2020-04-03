@@ -18,10 +18,10 @@ function getUserInfo(username) {
 
 async function createMD(answers) {
     const profileInfo = await getUserInfo(answers.username);
+    const readmeStrHeader = `<!-- omit in toc -->\n# ${answers.title}\n![GitHub language count](https://img.shields.io/github/languages/count/${answers.username}/${answers.title})`;
     let readmeStrBody = ``;
-    let readmeStrHeader = `<!-- omit in toc -->\n# ${answers.title}\n![GitHub language count](https://img.shields.io/github/languages/count/${answers.username}/${answers.title})`;
-    let tableStr = ``;
     const tableHeader = `\n\n<!-- omit in toc -->\n## Table of Contents`;
+    let tableStr = ``;
 
     // if user entered a description section add to readme
     if (answers.description !== "") {
