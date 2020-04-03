@@ -54,7 +54,7 @@ promptUser()
     // create md file with user's answers
     .then(answers => generateREADME.createMD(answers))
     // write returned md string to file
-    .then(readmeStr => writeFileAsync("README.md", readmeStr))
+    .then(readmeStr => writeFileAsync("output/README.md", readmeStr))
     // print statement when file successfully created
     .then(() => console.log("README.md created!"))
     .catch(error => console.log(error));
